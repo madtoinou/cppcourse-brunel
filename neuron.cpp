@@ -48,6 +48,6 @@ void Neuron::update(double simtime, double I_ext)
 		addSpike(simtime);
 	}
 
-	setMemPot(EXP1_*memb_pot_ + I_ext*R_*(1-EXP1_)/THO_);
+	setMemPot(EXP1_*memb_pot_ + I_ext*R_*(1-EXP1_));
 
 }
