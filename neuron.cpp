@@ -49,14 +49,14 @@ void Neuron::addSpike(double time)
 
 void Neuron::update(double simtime, double I_ext)
 {
-	if ((!spikes_historic_.empty()) && (simtime <= getLastSpike() + H ))  {
-		//neuron just reached the spike threshold and is reset to the reset potential
-		setMemPot(V_RESET_);		
-	} else if ((!spikes_historic_.empty()) && (simtime < getLastSpike() + REFRACT_TIME_ + H) {
+	if ((!spikes_historic_.empty()) && (simtime < getLastSpike() + REFRACT_TIME_)) {
 		//neuron is insensitive to stimulation during refract time, membrane potential 
 		//doesn't change
 	} else if (getMemPot() > SPIKE_THRESHOLD_) {
 		addSpike(simtime);
+		//neuron reached the spike, the value of the membrane potential is already
+		//stored (value of the last step), it has now to be reset
+		setMemPot(V_RESET_);
 	} else {
 		setMemPot(EXP1_*memb_pot_ + I_ext*R_*(1-EXP1_));
 	}
