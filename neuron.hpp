@@ -16,7 +16,7 @@ public:
 
 	void setMemPot(double pot);
 	void addSpike(double time);
-	void addTarget(Neuron* p_neuron);
+	void addTarget(Neuron neuron);
 
 	void addArrivingSpike(unsigned int firing_local_clock, double J);
 	void update(unsigned int nbStep, double I_ext);

@@ -22,6 +22,8 @@ Neuron::Neuron(double memb_pot, unsigned int local_clock)
 	//array<double, NbStepsequalDelay> buffer_spikes_;
 }
 
+//FAIRE UN JOLI DESTRUCTEUR QUI DETRUIT LES POINTEURS
+
 double Neuron::getMemPot() const
 {
 	return memb_pot_;
@@ -51,9 +53,10 @@ void Neuron::addSpike(double time)
 	spikes_historic_.push_back(time);
 }
 
-void Neuron::addTarget(Neuron* p_neuron)
+void Neuron::addTarget(Neuron neuron)
 {
-	targets_list_.push_back(p_neuron);
+	Neuron* tarNeuron = new Neuron (neuron);
+	targets_list_.push_back(tarNeuron);
 }
 
 
@@ -69,7 +72,7 @@ void Neuron::addArrivingSpike(unsigned int firing_local_clock, double J)
 
 void Neuron::update(unsigned int nbStep, double I_ext)
 {
-	if ((!spikes_historic_.empty()) && (local_clock_ < getLastSpike() + REFRACT_TIME_)) {
+	if ((!spikes_historic_.empty()) && (local_clock_*H < getLastSpike() + REFRACT_TIME_)) {
 		//neuron is insensitive to stimulation during refract time, membrane potential 
 		//doesn't change
 	} else if (getMemPot() > SPIKE_THRESHOLD_) {
@@ -89,9 +92,8 @@ void Neuron::update(unsigned int nbStep, double I_ext)
 		setMemPot(V_RESET_);
 	} else {
 		setMemPot(EXP1_*memb_pot_ + I_ext*R_*(1-EXP1_) 
-		//	+ buffer_spikes_.at(local_clock_ % buffer_spikes_.size())
 			+ buffer_spikes_.at(local_clock_ % buffer_spikes_.size())
 		);
 	}
-	local_clock_+= nbStep*H;
+	local_clock_+= nbStep;
 }

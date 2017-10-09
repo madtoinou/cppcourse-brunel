@@ -12,6 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
 #include "neuron.hpp"
 
 using namespace std;
@@ -26,7 +27,14 @@ vector<Neuron*> Neurons_;
 //un vector qui regroupe des pointeurs sur neurons
 //créer une table avec pour clef des int (nombre des neurones), contenant une XX qui regroupe les
 //J (amplitudes des spikes des neurones connectés)
-void addNeuron();
+
+//void addNeuron(Neuron neuron);
+
+void addNeuron(Neuron neuron)
+{
+	Neuron* p_neuron = new Neuron (neuron);
+	Neurons_.push_back(p_neuron);	
+}
 
 const double h (0.1); // = H du cpp, problème
 
@@ -48,26 +56,49 @@ int main()
 
 	Neuron neuron1;
 
-	ofstream myfile;
+	Neuron neuron2;
 
-	myfile.open ("neuron1.txt");
+	addNeuron(neuron1);
+	addNeuron(neuron2);
 
-	while (simtime < simduration)
-	{
-		if((simtime >= I_ext_start) && (simtime <= I_ext_end))
-	{
-		neuron1.update(1, I_ext); //where 1 is the number of steps the neuron should progress
-	} else {
-		neuron1.update(1, 0);
-	}
+	neuron1.addTarget(neuron2);
+	neuron2.addTarget(neuron1);
 
-	myfile << neuron1.getMemPot() << " ";
+	while (simtime < simduration) {
+		if((simtime >= I_ext_start) && (simtime <= I_ext_end)) {
+			for (unsigned int i(0); i < Neurons_.size(); ++i) {
+
+				ofstream myfile;
+
+				string filename ("neuron" + to_string(i) + ".txt");
+
+				myfile.open (filename);
+
+				Neurons_[i]->update(1, I_ext); //where 1 is the number of steps the neuron should progress
+
+				myfile << Neurons_[i]->getMemPot() << " ";
+
+				myfile.close();
+			}
+
+		} else {
+			for (unsigned int i(0); i < Neurons_.size(); ++i) {
+
+				ofstream myfile;
+
+				string filename ("neuron" + to_string(i) + ".txt");
+
+				myfile.open (filename);
+
+				Neurons_[i]->update(1, 0); //where 1 is the number of steps the neuron should progress
+
+				myfile << Neurons_[i]->getMemPot() << " ";
+
+				myfile.close();	
+			}
+		}
 
 	simtime+=h;
 	}
-}
 
-void addNeuron()
-{
-	Neurons_.push_back(new Neuron ());
 }
