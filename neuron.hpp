@@ -13,6 +13,7 @@ public:
 	double getMemPot() const;
 	unsigned int getNbSpike() const;
 	double getLastSpike() const;
+	unsigned int getReadoutBufferIndex() const;
 
 	void setMemPot(double pot);
 	void addSpike(double time);

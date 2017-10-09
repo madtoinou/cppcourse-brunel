@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include "neuron.hpp"
+#include "network.hpp"
 
 using namespace std;
 
@@ -43,6 +44,11 @@ double Neuron::getLastSpike() const
 	}
 }
 
+unsigned int Neuron::getReadoutBufferIndex() const
+{
+	return local_clock_ % (buffer_spikes_.size()+1);
+}
+
 void Neuron::setMemPot(double pot)
 {
 	memb_pot_=pot;
@@ -62,7 +68,7 @@ void Neuron::addTarget(Neuron neuron)
 
 void Neuron::addArrivingSpike(unsigned int arriving_time, double J)
 {
-		buffer_spikes_.at((arriving_time - local_clock_ -1) % buffer_spikes_.size()) += J;
+		buffer_spikes_.at((arriving_time) % (buffer_spikes_.size()+1)) += J;
 		//si firing est en retard, indice = D-1
 		//si firing = receiver, indice = D
 		//firing est incrémenté seulement après, impossible que firing > receiver
@@ -80,7 +86,7 @@ void Neuron::update(unsigned int nbStep, double I_ext)
 		//neuron reached the spike, the value of the membrane potential is already
 		//stored (value of the last step), it has now to be reset
 		
-		for (auto& tar_neuron : targets_list_)
+		for (auto& tar_neuron : Network::getTargets(this))
 		{
 			tar_neuron->addArrivingSpike(local_clock_ + 15, getMemPot()); // where 15 is the number of steps to get the delay
 			/*éventuellement multiplier getMemPOt()
@@ -92,8 +98,8 @@ void Neuron::update(unsigned int nbStep, double I_ext)
 		setMemPot(V_RESET_);
 	} else {
 		setMemPot(EXP1_*memb_pot_ + I_ext*R_*(1-EXP1_) 
-			+ buffer_spikes_.at(local_clock_ % buffer_spikes_.size())
-		);
+			+ buffer_spikes_.at(getReadoutBufferIndex())
+			);
 	}
 	local_clock_+= nbStep;
 }

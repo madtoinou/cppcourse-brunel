@@ -18,10 +18,10 @@
 using namespace std;
 
 double simtime (0);
-double simduration(1000);
-double I_ext(12);
-double I_ext_start(175);
-double I_ext_end(840);
+double simduration(100);
+double I_ext(7);
+double I_ext_start(20);
+double I_ext_end(70);
 
 vector<Neuron*> Neurons_; 
 //un vector qui regroupe des pointeurs sur neurons
@@ -38,20 +38,6 @@ const double h (0.1); // = H du cpp, problème
 
 int main() 
 {
-	cout << "How long do you want the simulation to be? (in ms, 1000 is good)" << endl;
-	cin >> simduration;
-
-	cout << "Please specify an external current I_ext (between 0 and 400, 12 is great)" << endl;
-	cin >> I_ext;
-
-	cout << "Please specify the time_start of I_ext (between 0 and the above promted simduration)";
-	cout << " 175 is great" << endl;
-	cin >> I_ext_start;
-
-	cout << "Please specify the time_end of I_ext (between time_start and simduration)";
-	cout << " 840 is great" << endl;
-	cin >> I_ext_end;
-
 	Neuron neuron1(19,0);
 
 	Neuron neuron2;
@@ -95,6 +81,10 @@ int main()
 			myfile << val << " ";
 		}
 
+		cout << "neu1 last spike" << Neurons_[0].getLastSpike() << " // ";
+		cout << "readout buffer: " << AffBufferValue(Neurons_[0]->getReadoutBufferIndex()) << "\n";
+		cout << "neu2 last spike" << Neurons_[1].getLastSpike() << " // ";
+		cout << 
 	simtime+=h;
 	}
 }
