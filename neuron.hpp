@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include "constants.hpp"
 
 class Neuron 
 {
@@ -13,10 +14,13 @@ public:
 	double getMemPot() const;
 	unsigned int getNbSpike() const;
 	double getLastSpike() const;
+	unsigned int getLocalClock() const;
+	std::vector<double> getSpikeHistoric() const;
+	std::vector<double> getBuffer() const;
 
 	void setMemPot(double pot);
 	void addSpike(double time);
-	void addTarget(Neuron neuron);
+	void addTarget(Neuron* p_neuron);
 
 	void addArrivingSpike(unsigned int arriving_time, double J);
 	void update(unsigned int nbStep, double I_ext);
@@ -30,25 +34,17 @@ private:
 	static const double REFRACT_TIME_;
 	static const double EXP1_;
 	static const double R_;
-	//static const unsigned int NbStepsequalDelay = 15;
 
 	double memb_pot_;
 	unsigned int local_clock_; //number of step the neuron went trought
 	std::vector<double> spikes_historic_;
 
-	/*vector<Neuron_connection> where Neuron_connection is <&neuron, efficacy> 
-	connected_neurons_; efficacy is J_ij in the paper
+	/*CREAT A STRUCTURE <NEURON*, DOUBLE> conNeuron where the double is the efficacy; J_ij
+	in the paper, then use it for targets_list_
 	*/
 	std::vector<Neuron*> targets_list_;
 
-	/*
-	utiliser une map (unordered_map<unsigned int, double> buffer_spikes) avec pour clef le 
-	multiple de h qui sépare l'horloge locale de l'heure d'arrivée du signal
-	*/
-	std::array<double, 15> buffer_spikes_; 
-	/* à initialiser  de taille D/h  ou D/h + 1, ici D/h est égal à 15
-	*/
-
+	std::vector<double> buffer_spikes_; 
 };
 
 #endif

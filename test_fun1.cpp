@@ -8,10 +8,10 @@
 using namespace std;
 
 double simtime (0);
-double simduration(1000);
-double I_ext(12);
-double I_ext_start(175);
-double I_ext_end(840);
+double simduration(100);
+double I_ext(4);
+double I_ext_start(0);
+double I_ext_end(80);
 
 vector<Neuron*> Neurons_; 
 
@@ -23,21 +23,7 @@ void addNeuron(double memPot)
 
 int main() 
 {
-	cout << "How long do you want the simulation to be? (in ms, 1000 is good)" << endl;
-	cin >> simduration;
-
-	cout << "Please specify an external current I_ext (between 0 and 400, 12 is great)" << endl;
-	cin >> I_ext;
-
-	cout << "Please specify the time_start of I_ext (between 0 and the above promted simduration)";
-	cout << " 175 is great" << endl;
-	cin >> I_ext_start;
-
-	cout << "Please specify the time_end of I_ext (between time_start and simduration)";
-	cout << " 840 is great" << endl;
-	cin >> I_ext_end;
-
-	addNeuron(0.0);
+	addNeuron(19.0);
 	addNeuron(0.0);
 
 	Neurons_[0]->addTarget(Neurons_[1]);
@@ -47,16 +33,28 @@ int main()
 
 	ofstream myfile;
 
-	myfile.open ("simulation.dat");
+	myfile.open ("test1.txt");
 
 	myfile << "Nb_of_neuron=" << Neurons_.size() << "\n"; // important when we want to exploit the data
 
 	while (simtime < simduration) {
+
 		if((simtime >= I_ext_start) && (simtime <= I_ext_end)) {
+
 			for (unsigned int i(0); i < Neurons_.size(); ++i) {
 
+				if (Neurons_[i]->getMemPot() > 20.0)
+				{
+					myfile << "\n";
+					myfile << "autre neuronne buffer= ";
+
+					for (auto val : Neurons_[1-i]->getBuffer())
+					{
+						myfile << val << " ; ";
+					}
+				}
+
 				Neurons_[i]->update(1, I_ext);
-				//where 1 is the number of steps the neuron should progress
 
 				mempot_values[i] = Neurons_[i]->getMemPot();
 			}
@@ -64,8 +62,18 @@ int main()
 		} else {
 			for (unsigned int i(0); i < Neurons_.size(); ++i) {
 
+				if (Neurons_[i]->getMemPot() >= 20.0)
+				{
+					myfile << "\n";					
+					myfile << "autre neuronne buffer= ";
+
+					for (auto val : Neurons_[1-i]->getBuffer())
+					{
+						myfile << val << " ; ";
+					}
+				}
+
 				Neurons_[i]->update(1, 0);
-				//where 1 is the number of steps the neuron should progress
 
 				mempot_values[i] = Neurons_[i]->getMemPot();
 			}
@@ -74,9 +82,8 @@ int main()
 		for (auto val : mempot_values)
 		{
 			myfile << val << " ";
-		}
+		}		
 
 	simtime+=h;
 	}
-
 }
