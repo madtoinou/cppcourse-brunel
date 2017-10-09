@@ -64,41 +64,39 @@ int main()
 	neuron1.addTarget(neuron2);
 	neuron2.addTarget(neuron1);
 
+	vector<double> mempot_values (Neurons_.size());
+
+	ofstream myfile;
+
+	myfile.open ("simulation.dat");
+
+	myfile << "Nb_of_neuron=" << Neurons_.size() << "\n"; // important when we want to exploit the data
+
 	while (simtime < simduration) {
 		if((simtime >= I_ext_start) && (simtime <= I_ext_end)) {
 			for (unsigned int i(0); i < Neurons_.size(); ++i) {
 
-				ofstream myfile;
+				Neurons_[i]->update(1, I_ext);
+				//where 1 is the number of steps the neuron should progress
 
-				string filename ("neuron" + to_string(i) + ".txt");
-
-				myfile.open (filename);
-
-				Neurons_[i]->update(1, I_ext); //where 1 is the number of steps the neuron should progress
-
-				myfile << Neurons_[i]->getMemPot() << " ";
-
-				myfile.close();
+				mempot_values[i] = Neurons_[i]->getMemPot();
 			}
 
 		} else {
 			for (unsigned int i(0); i < Neurons_.size(); ++i) {
 
-				ofstream myfile;
+				Neurons_[i]->update(1, 0);
+				//where 1 is the number of steps the neuron should progress
 
-				string filename ("neuron" + to_string(i) + ".txt");
-
-				myfile.open (filename);
-
-				Neurons_[i]->update(1, 0); //where 1 is the number of steps the neuron should progress
-
-				myfile << Neurons_[i]->getMemPot() << " ";
-
-				myfile.close();	
+				mempot_values[i] = Neurons_[i]->getMemPot();
 			}
+		}
+
+		for (auto val : mempot_values)
+		{
+			myfile << val << " ";
 		}
 
 	simtime+=h;
 	}
-
 }

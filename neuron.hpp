@@ -18,7 +18,7 @@ public:
 	void addSpike(double time);
 	void addTarget(Neuron neuron);
 
-	void addArrivingSpike(unsigned int firing_local_clock, double J);
+	void addArrivingSpike(unsigned int arriving_time, double J);
 	void update(unsigned int nbStep, double I_ext);
 
 private:

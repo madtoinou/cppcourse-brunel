@@ -60,13 +60,13 @@ void Neuron::addTarget(Neuron neuron)
 }
 
 
-void Neuron::addArrivingSpike(unsigned int firing_local_clock, double J)
+void Neuron::addArrivingSpike(unsigned int arriving_time, double J)
 {
-		buffer_spikes_.at((firing_local_clock - local_clock_ + 15 - 1) % buffer_spikes_.size()) += J;
+		buffer_spikes_.at((arriving_time - local_clock_ -1) % buffer_spikes_.size()) += J;
 		//si firing est en retard, indice = D-1
 		//si firing = receiver, indice = D
 		//firing est incrémenté seulement après, impossible que firing > receiver
-		// le -1 viebnt de l'implémentation des array, premier indice étant 0
+		// le -1 vient de l'implémentation des vectors, premier indice étant 0
 }
 
 
@@ -82,7 +82,7 @@ void Neuron::update(unsigned int nbStep, double I_ext)
 		
 		for (auto& tar_neuron : targets_list_)
 		{
-			tar_neuron->addArrivingSpike(local_clock_, getMemPot()); //
+			tar_neuron->addArrivingSpike(local_clock_ + 15, getMemPot()); // where 15 is the number of steps to get the delay
 			/*éventuellement multiplier getMemPOt()
 			par le facteur efficacy entre les deux neurones, cf les informations de 
 			connected_neurons
