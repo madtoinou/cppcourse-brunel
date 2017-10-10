@@ -43,18 +43,22 @@ int main()
 
 			for (unsigned int i(0); i < Neurons_.size(); ++i) {
 
-				if (Neurons_[i]->getMemPot() > 20.0)
+				Neurons_[i]->update(1, I_ext);
+
+				if ((Neurons_[i]->getLastSpike() != -10) && (Neurons_[i]->getMemPot() != 10.0))
 				{
+					myfile << "Neuron " << i << " atteint un spike de " << Neurons_[i]->getMemPot() << " mV à " << Neurons_[i]->getLastSpike();
 					myfile << "\n";
-					myfile << "autre neuronne buffer= ";
+					myfile << "Buffer du Neuron " << 1-i << "= ";
 
 					for (auto val : Neurons_[1-i]->getBuffer())
 					{
 						myfile << val << " ; ";
 					}
-				}
 
-				Neurons_[i]->update(1, I_ext);
+					myfile << "Position du readout = indice " << Neurons_[1-i]->getReadOutPos();
+					myfile << "\n";
+				}
 
 				mempot_values[i] = Neurons_[i]->getMemPot();
 			}
@@ -62,18 +66,21 @@ int main()
 		} else {
 			for (unsigned int i(0); i < Neurons_.size(); ++i) {
 
-				if (Neurons_[i]->getMemPot() >= 20.0)
+				Neurons_[i]->update(1, 0);
+
+				if ((Neurons_[i]->getLastSpike() != -10) && (Neurons_[i]->getMemPot() != 10.0))
 				{
-					myfile << "\n";					
-					myfile << "autre neuronne buffer= ";
+					myfile << "Neuron " << i << " atteint un spike de " << Neurons_[i]->getMemPot() << "à " << Neurons_[i]->getLastSpike();
+					myfile << "\n";
+					myfile << "Buffer du Neuron " << 1-i << "= ";
 
 					for (auto val : Neurons_[1-i]->getBuffer())
 					{
 						myfile << val << " ; ";
 					}
+					myfile << "Position du readout = indice " << Neurons_[1-i]->getReadOutPos();
+					myfile << "\n";
 				}
-
-				Neurons_[i]->update(1, 0);
 
 				mempot_values[i] = Neurons_[i]->getMemPot();
 			}
@@ -82,7 +89,8 @@ int main()
 		for (auto val : mempot_values)
 		{
 			myfile << val << " ";
-		}		
+		}
+		myfile << "\n";
 
 	simtime+=h;
 	}

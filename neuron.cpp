@@ -58,6 +58,11 @@ vector<double> Neuron::getBuffer() const
 	return buffer_spikes_;
 }
 
+unsigned int Neuron::getReadOutPos() const
+{
+	return local_clock_ % (buffer_spikes_.size() + 1);
+}
+
 
 void Neuron::setMemPot(double pot)
 {
@@ -77,7 +82,7 @@ void Neuron::addTarget(Neuron* p_neuron)
 
 void Neuron::addArrivingSpike(unsigned int arriving_time, double J)
 {
-	cout << "hop, un spike dans le buffer" << endl;
+	cout << "hop, un spike de " << J << " dans le buffer" << endl;
 	buffer_spikes_[(arriving_time)  % (buffer_spikes_.size()+1)] += J;
 	//si firing est en retard, indice = D-1
 	//si firing = receiver, indice = D
@@ -108,7 +113,7 @@ void Neuron::update(unsigned int nbStep, double I_ext)
 		setMemPot(V_RESET_);
 	} else {
 		setMemPot(EXP1_*memb_pot_ + I_ext*R_*(1-EXP1_) 
-			//+ buffer_spikes_.at(local_clock_ % buffer_spikes_.size())
+			//+ buffer_spikes_.at(getReadOutPos())
 		);
 	}
 	local_clock_+= nbStep;

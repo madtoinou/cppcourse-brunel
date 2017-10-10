@@ -17,6 +17,7 @@ public:
 	unsigned int getLocalClock() const;
 	std::vector<double> getSpikeHistoric() const;
 	std::vector<double> getBuffer() const;
+	unsigned int getReadOutPos() const;
 
 	void setMemPot(double pot);
 	void addSpike(double time);
