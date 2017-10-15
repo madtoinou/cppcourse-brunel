@@ -16,14 +16,14 @@ public:
 	double getLastSpike() const;
 	unsigned int getLocalClock() const;
 	std::vector<double> getSpikeHistoric() const;
-	std::vector<double> getBuffer() const;
+	std::array<double, D> getBuffer() const;
 	unsigned int getReadOutPos() const;
 
 	void setMemPot(double pot);
 	void addSpike(double time);
 	void addTarget(Neuron* p_neuron);
 
-	void addArrivingSpike(unsigned int arriving_time, double J);
+	void addArrivingSpike(unsigned int arriving_time, double coef);
 	void update(unsigned int nbStep, double I_ext);
 
 private:
@@ -45,7 +45,7 @@ private:
 	*/
 	std::vector<Neuron*> targets_list_;
 
-	std::vector<double> buffer_spikes_; 
+	std::array<double, D> buffer_spikes_; 
 };
 
 #endif
