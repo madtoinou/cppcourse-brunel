@@ -4,70 +4,69 @@
 #include <string>
 #include "constants.hpp"
 #include "neuron.hpp"
+#include "network.hpp"
 
 using namespace std;
 
 unsigned int simtime (0);
-unsigned int simduration(1000);
-double I_ext(4);
+unsigned int simduration(10000);
+double I_ext(1.01);
 unsigned int I_ext_start(0);
-unsigned int I_ext_end(700);
-
-vector<Neuron*> Neurons_; 
-
-void addNeuron(double memPot)
-{
-	Neuron* p_neuron (new Neuron(memPot));
-	Neurons_.push_back(p_neuron);	
-}
+unsigned int I_ext_end(10000);
 
 int main() 
 {
-	addNeuron(0.0);
-	addNeuron(19.0);
+	Network twoneurons(2);
 
-	Neurons_[0]->addTarget(Neurons_[1]);
-	Neurons_[1]->addTarget(Neurons_[0]);
+	twoneurons.addPostSynap(0, 1);
 
-	vector<double> mempot_values (Neurons_.size());
+	vector<double> mempot_values (TotalNbNeurons);
 
 	ofstream myfile;
 
-	myfile.open ("test2.txt");
+	myfile.open ("simulation.txt");
 
-	myfile << "Nb_of_neuron=" << Neurons_.size() << "\n"; // important when we want to exploit the data
+	myfile << "Nb_of_neuron=" << TotalNbNeurons << "\n"; // important when we want to exploit the data
 
 	while (simtime < simduration) {
 
 		if((simtime >= I_ext_start) && (simtime <= I_ext_end)) {
-
-			for (unsigned int i(0); i < Neurons_.size(); ++i) {
-							
-				Neurons_[i]->update(1, I_ext);				
-
-				mempot_values[i] = Neurons_[i]->getMemPot();
-			}
-
+			twoneurons.getNeuron(0)->setIext(I_ext);
 		} else {
-			for (unsigned int i(0); i < Neurons_.size(); ++i) {
-
-				Neurons_[i]->update(1, 0);
-
-				mempot_values[i] = Neurons_[i]->getMemPot();
-			}
+			twoneurons.getNeuron(0)->setIext(0.0);
 		}
 
-		for (unsigned int i(0); i < Neurons_.size(); ++i) {
+		for (unsigned int i(0); i < TotalNbNeurons; ++i) {
+						
+			if (twoneurons.getNeuron(i)->update(1)) {
+
+				cout << "NEURON " << i << " SPIKE AT " << simtime*h << " ms!!!" << endl;
+
+				for (unsigned int j(0); j < TotalNbNeurons; ++j) {
+
+					if(twoneurons.isPostSynap(i, j)) {
+
+						cout << "NEURON " << j << " EST AFFECTE" << endl;
+
+						twoneurons.getNeuron(j)->addArrivingSpike(simtime+D);
+					}
+				}
+			}				
+
+			mempot_values[i] = twoneurons.getNeuron(i)->getMemPot();
+		}
+
+		for (unsigned int i(0); i < TotalNbNeurons; ++i) {
 
 			myfile << "Buffer du Neuron " << i << "= ";
 				
-			for (auto val : Neurons_[i]->getBuffer())
+			for (auto val : twoneurons.getNeuron(i)->getBuffer())
 			{
 				myfile << val << " ; ";
 			}
 
 			myfile << "\n";
-			myfile << "Local_time du Neurone = " << Neurons_[i]->getLocalClock() << "\n";
+			myfile << "Local_time du Neurone = " << twoneurons.getNeuron(i)->getLocalClock()*h << "ms \n";
 
 		}
 

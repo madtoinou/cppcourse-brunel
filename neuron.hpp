@@ -9,22 +9,22 @@
 class Neuron 
 {
 public:
-	Neuron(double memb_pot=V_RESET_, unsigned int local_clock=0);
+	Neuron(double memb_pot=V_RESET_, unsigned int local_clock=0, double Iext_=0);
 
 	double getMemPot() const;
 	unsigned int getNbSpike() const;
 	double getLastSpike() const;
 	unsigned int getLocalClock() const;
-	std::vector<double> getSpikeHistoric() const;
-	std::array<double, D> getBuffer() const;
+	std::vector<unsigned int> getSpikeHistoric() const;
+	std::array<double, D+1> getBuffer() const;
 	unsigned int getReadOutPos() const;
 
 	void setMemPot(double pot);
+	void setIext(double Iext);
 	void addSpike(double time);
-	void addTarget(Neuron* p_neuron);
 
-	void addArrivingSpike(unsigned int arriving_time, double coef);
-	void update(unsigned int nbStep, double I_ext);
+	void addArrivingSpike(unsigned int arriving_time);
+	bool update(unsigned int nbStep);
 
 private:
 	//attribut de classe	
@@ -38,14 +38,10 @@ private:
 
 	double memb_pot_;
 	unsigned int local_clock_; //number of step the neuron went trought
-	std::vector<double> spikes_historic_;
+	std::vector<unsigned int> spikes_historic_;
+	double Iext_;
 
-	/*CREAT A STRUCTURE <NEURON*, DOUBLE> conNeuron where the double is the efficacy; J_ij
-	in the paper, then use it for targets_list_
-	*/
-	std::vector<Neuron*> targets_list_;
-
-	std::array<double, D> buffer_spikes_; 
+	std::array<double, D+1> buffer_spikes_; 
 };
 
 #endif
