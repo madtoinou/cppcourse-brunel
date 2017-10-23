@@ -56,11 +56,11 @@ void Network::creatRandomCon(unsigned int nbExiNeurons, unsigned int nbInhNeuron
 	for (unsigned int i(0); i< Neurons_.size(); ++i) {
 
 		for (unsigned int j(0); j < nbExiNeurons/10; ++j) {
-			addPostSynap(i, distExci(gen));
+			addPostSynap(distExci(gen), i);
 		}
 
 		for (unsigned int k(0); k < nbInhNeurons/10; ++k) {
-			addPostSynap(i, distInhi(gen));
+			addPostSynap(distInhi(gen), i);
 		}
 	}
 }

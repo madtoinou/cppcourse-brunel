@@ -25,7 +25,7 @@ public:
 
 private:
 	std::vector<Neuron*> Neurons_;
-	std::vector<std::vector<unsigned int>> neurons_graphe_;
+	std::vector<std::vector<unsigned int>> neurons_graphe_; //axe horizontal: receveur, axe vertical envoyeur
 };
 
 #endif

@@ -30,7 +30,6 @@ TEST (NeuronTest, MembPot_ManyStep_noInput) {
 
 	neuron.update(100000,0);
 	EXPECT_EQ(0, neuron.getNbSpike());
-	//ASSERT_LT(0.00000001, std::fabs(neuron.getMemPot()));
 }
 
 TEST (NeuronTest, MembPot_ManyStep_negInput) {
