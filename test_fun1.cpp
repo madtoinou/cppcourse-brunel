@@ -9,14 +9,14 @@
 using namespace std;
 
 unsigned int simtime (0);
-unsigned int simduration(1000);
+unsigned int simduration(3000);
 double I_ext(1.01);
-unsigned int I_ext_start(0);
-unsigned int I_ext_end(10000);
+unsigned int I_ext_start(200);
+unsigned int I_ext_end(1800);
 
 int main() 
 {
-	Network smallBrain(1000,250);
+	Network smallBrain(10000,2500);
 
 	smallBrain.updateWriting(I_ext, simduration, I_ext_start, I_ext_end, 0);
 
