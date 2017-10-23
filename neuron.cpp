@@ -71,10 +71,12 @@ void Neuron::setMemPot(double pot)
 	memb_pot_=pot;
 }
 
+
 void Neuron::setIext(double Iext)
 {
 	Iext_=Iext;
 }
+
 
 void Neuron::setExcitatory(bool bo)
 {
@@ -82,21 +84,17 @@ void Neuron::setExcitatory(bool bo)
 }
 
 
-void Neuron::addSpike(double time)
+void Neuron::addSpike(unsigned int time)
 {
 	spikes_historic_.push_back(time);
 }
+
 
 void Neuron::addArrivingSpike(unsigned int arriving_time, int ConnectionNature)
 {
 	buffer_spikes_[(arriving_time  % buffer_spikes_.size())] += J*ConnectionNature;
 }
 
-/** 
-  Update the state of the neuron state from time t to time t+nbStep
-  @param : number of steps to be simulated, steps>=1
-  @return : true if the neuron reachs the spike threshold, else false 
-*/
 
 bool Neuron::update(unsigned int nbStep, double backgroundInfluence)
 {
