@@ -3,22 +3,29 @@
 
 #include <iostream>
 #include <vector>
-#include <array>
+#include <fstream>
+#include <random>
 #include "constants.hpp"
 #include "neuron.hpp"
 
-class Network //: public sf::NonCopyable
+class Network
 {
 public:
-	Network(unsigned int NbNeurons=TotalNbNeurons);
+	Network(unsigned int NbNeurons);
+	Network(unsigned int nbExiNeurons, unsigned int nbInhNeurons);
 
 	Neuron* getNeuron(unsigned int ID);
-	bool isPostSynap(unsigned int IDPreNeur, unsigned int IDPostNeur) const;
+	unsigned int isPostSynap(unsigned int IDPreNeur, unsigned int IDPostNeur) const;
 	void addPostSynap(unsigned int IDPreNeur, unsigned int IDPostNeur);
+	void creatRandomCon(unsigned int nbExiNeurons, unsigned int nbInhNeurons);
+
+	void update(double Iext, unsigned int nbStep, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence);
+	void updateWriting (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence);
+
 
 private:
 	std::vector<Neuron*> Neurons_;
-	std::vector<std::vector<bool>> neurons_graphe_; //à la C, double pointeurs, provinet de la construction des array
+	std::vector<std::vector<unsigned int>> neurons_graphe_;
 };
 
 #endif
