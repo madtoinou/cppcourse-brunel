@@ -53,22 +53,17 @@ int main()
 
 	while (simtime < simduration) {
 		if((simtime >= I_ext_start) && (simtime <= I_ext_end)) {
-			for (unsigned int i(0); i < Neurons_.size(); ++i) {
-
-				Neurons_[i]->update(1, I_ext);
-				//where 1 is the number of steps the neuron should progress
-
-				mempot_values[i] = Neurons_[i]->getMemPot();
-			}
-
+			Neurons_[0]->setIext(I_ext);
 		} else {
-			for (unsigned int i(0); i < Neurons_.size(); ++i) {
+			Neurons_[0]->setIext(0.0);
+		}
+			
+		for (unsigned int i(0); i < Neurons_.size(); ++i) {
 
-				Neurons_[i]->update(1, 0);
-				//where 1 is the number of steps the neuron should progress
+			Neurons_[i]->update(1);
+			//where 1 is the number of steps the neuron should progress
 
-				mempot_values[i] = Neurons_[i]->getMemPot();
-			}
+			mempot_values[i] = Neurons_[i]->getMemPot();
 		}
 
 		for (auto val : mempot_values)

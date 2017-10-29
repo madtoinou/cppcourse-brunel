@@ -8,7 +8,7 @@
 #include "constants.hpp"
 
 /** 
- * Class to represent neuron, their caracteristics and shared constants:
+ * Class to represent neurons, their caracteristics and shared constants:
  * Used to creat neurons network. Include several attribute allowing neuron to keep a history
  * of their spikes (timing), to store received spikes until they effectively influence 
  * the neuron's potential.
@@ -19,10 +19,10 @@ class Neuron
 public:
 	/**
   	@brief : Constructor
-  	@param : true if the neuron is excitatory (default : true, excitatory)
-  	@param : inital value of the membrane potential (default : V_reset mV)
-  	@param : intial value of the local_clock, in steps (default : 0 step)
-  	@param : external current applied to the neuron (default : 0 mV)
+  	@param : is Exci : true if the neuron is excitatory (default : true, excitatory)
+  	@param : mem_pot : inital value of the membrane potential (default : V_reset mV)
+  	@param : local_clock : intial value of the local_clock, in steps (default : 0 step)
+  	@param : Iext : external current applied to the neuron (default : 0 mV)
 	*/
 	Neuron(bool isExci=true, double memb_pot=V_RESET_, unsigned int local_clock=0, double Iext=0);
 
@@ -78,46 +78,48 @@ public:
 
 	/**
   	@brief : Setter, set the attribute memb_pot_ to pot
-  	@param : membrane potential of the neuron 
+  	@param : pot : membrane potential of the neuron 
 	*/
 	void setMemPot(double pot);
 
 	/**
   	@brief : Setter, set the attribute Iext_ to Iext 
-  	@param : external (outside the neurons Network) current applied to the given neuron 
+  	@param : Iext : external (outside the neurons Network) current applied to the given neuron 
 	*/
 	void setIext(double Iext);
 
 	/** 
   	@brief : Setter, set the attribute Excitatory to bo
-  	@param : true if the neuron is excitatory, else false
+  	@param : bo true if the neuron is excitatory, else false
 	*/
 	void setExcitatory(bool bo);
 
 	/** 
   	@brief : Store local time of the neuron, used when the membrane potential reachs the spike threshold
-  	@param : time (local) when the spike occured (in steps >=0)
+  	@param : time : time (local) when the spike occured (in steps >=0)
 	*/
 	void addSpike(unsigned int time);
 
 	/** 
   	@brief : Store a spike in the neuron's buffer
-  	@param : spike's time (global) of arrival (in steps >=)
-  	@param : number of connections between the given neurons multiplied by the constant corresponding
+  	@param : arriving_time : spike's time (global) of arrival (in steps >=)
+  	@param : ConnectionNature : number of connections between the given neurons multiplied by the constant corresponding
   	to the nature of the spiking neuron (1 if excitatory, g if inhibitor)
 	*/
 	void addArrivingSpike(unsigned int arriving_time, int ConnectionNature);
 
 	/** 
   	@brief : Update the state of the neuron state from time t to time t+nbStep
-  	@param : number of steps to be simulated, steps >=1
-  	@param : coefficient determining the impact of the background noise (should be %)
+  	@param : nbStep : number of steps to be simulated, steps >=1
+  	@param : backgroundInfluence : coefficient determining the impact of the background noise (1 for 100%, 0.5 for 50%)
   	@return : true if the neuron reachs the spike threshold, else false 
 	*/
 	bool update(unsigned int nbStep, double backgroundInfluence);
 
 private:
-	//attribut de classe	
+	/**
+	Static attribute
+	*/
 	static const double THO_; /** Constant, represents ... */
 	static const double C_; /** Capacity of the neuron's membrane (THO.Ohm⁻1) */
 	static const double SPIKE_THRESHOLD_; /** Potential value corresponding to a spike (mV)*/
@@ -129,6 +131,9 @@ private:
 	static std::poisson_distribution<> background_noise_; /** Probability of noise, computed from the 
 	average number of spike, the simulation step and ...*/
 
+	/**
+	Attribute
+	*/
 	double memb_pot_; /** Value of the neuron's membrane potential (mV)*/
 	unsigned int local_clock_; /** Number of steps the neuron went trought*/
 	std::vector<unsigned int> spikes_historic_; /** History of the spike's timing */

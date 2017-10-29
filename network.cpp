@@ -12,22 +12,22 @@ Network::Network(unsigned int NbNeurons)
 	}
 }
 
-Network::Network(unsigned int nbExiNeurons, unsigned int nbInhNeurons)
-: neurons_graphe_(nbExiNeurons+nbInhNeurons, vector<unsigned int> (nbExiNeurons+nbInhNeurons))
+Network::Network(unsigned int nbExciNeurons, unsigned int nbInhiNeurons)
+: neurons_graphe_(nbExciNeurons+nbInhiNeurons, vector<unsigned int> (nbExciNeurons+nbInhiNeurons))
 {
-	for (unsigned int i(0); i<nbExiNeurons; ++i)
+	for (unsigned int i(0); i<nbExciNeurons; ++i)
 	{
 		Neuron* p_neuron (new Neuron(true));
 		Neurons_.push_back(p_neuron);	
 	}
 
-	for (unsigned int i(0); i<nbInhNeurons; ++i)
+	for (unsigned int i(0); i<nbInhiNeurons; ++i)
 	{
 		Neuron* p_neuron (new Neuron(false));
 		Neurons_.push_back(p_neuron);	
 	}
 
-	creatRandomCon(nbExiNeurons, nbInhNeurons);
+	creatRandomCon(nbExciNeurons, nbInhiNeurons);
 }
 
 Neuron* Network::getNeuron(unsigned int ID)
@@ -45,21 +45,21 @@ void Network::addPostSynap(unsigned int IDPreNeur, unsigned int IDPostNeur)
 	neurons_graphe_[IDPreNeur][IDPostNeur]+=1;
 }
 
-void Network::creatRandomCon(unsigned int nbExiNeurons, unsigned int nbInhNeurons)
+void Network::creatRandomCon(unsigned int nbExciNeurons, unsigned int nbInhiNeurons)
 {
 	random_device rd;
 	mt19937 gen(rd());
-	uniform_int_distribution<> distExci(0, nbExiNeurons-1);
-	uniform_int_distribution<> distInhi(nbExiNeurons, nbExiNeurons+nbInhNeurons-1);
+	uniform_int_distribution<> distExci(0, nbExciNeurons-1);
+	uniform_int_distribution<> distInhi(nbExciNeurons, nbExciNeurons+nbInhiNeurons-1);
 
 
 	for (unsigned int i(0); i< Neurons_.size(); ++i) {
 
-		for (unsigned int j(0); j < nbExiNeurons/10; ++j) {
+		for (unsigned int j(0); j < nbExciNeurons/10; ++j) {
 			addPostSynap(distExci(gen), i);
 		}
 
-		for (unsigned int k(0); k < nbInhNeurons/10; ++k) {
+		for (unsigned int k(0); k < nbInhiNeurons/10; ++k) {
 			addPostSynap(distInhi(gen), i);
 		}
 	}
@@ -98,7 +98,7 @@ void Network::update (double Iext, unsigned int nbSteps, unsigned int Iext_start
 	}
 }
 
-void Network::updateWriting (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence)
+void Network::updateWriting (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, string filename)
 {
 	unsigned int TotNbNeurons(Neurons_.size());
 
@@ -106,7 +106,7 @@ void Network::updateWriting (double Iext, unsigned int nbSteps, unsigned int Iex
 
 	ofstream myfile;
 
-	myfile.open ("simulation.txt");
+	myfile.open (filename+".dat");
 
 	myfile << TotNbNeurons << "\n";
 

@@ -1,9 +1,9 @@
 #include <iostream>
+#include <cmath>
 #include "constants.hpp"
 #include "neuron.hpp"
 #include "network.hpp"
 #include "gtest/gtest.h"
-#include <cmath>
 
 TEST (NeuronTest, MembPot_1step_positivInput) {
 	Neuron neuron;
