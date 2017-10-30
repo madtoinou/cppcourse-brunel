@@ -3,7 +3,7 @@
 using namespace std;
 
 Network::Network(unsigned int NbNeurons)
-: neurons_graphe_(NbNeurons, vector<unsigned int> (NbNeurons))
+: neurons_graphe_(NbNeurons, vector<unsigned int>())
 {
 	for (unsigned int i(0); i<NbNeurons; ++i)
 	{
@@ -35,14 +35,9 @@ Neuron* Network::getNeuron(unsigned int ID)
 	return Neurons_[ID];
 }
 
-unsigned int Network::isPostSynap(unsigned int IDPreNeur, unsigned int IDPostNeur) const
-{
-	return neurons_graphe_[IDPreNeur][IDPostNeur];
-}
-
 void Network::addPostSynap(unsigned int IDPreNeur, unsigned int IDPostNeur)
 {
-	neurons_graphe_[IDPreNeur][IDPostNeur]+=1;
+	neurons_graphe_[IDPreNeur].push_back(IDPostNeur);
 }
 
 void Network::creatRandomCon(unsigned int nbExciNeurons, unsigned int nbInhiNeurons)
@@ -82,23 +77,21 @@ void Network::update (double Iext, unsigned int nbSteps, unsigned int Iext_start
 						
 			if (getNeuron(i)->update(1, backgroundInfluence)) {
 
-				for (unsigned int j(0); j < TotNbNeurons; ++j) {
+				for (auto PostSynap : neurons_graphe_[i]) {
 
-					if(isPostSynap(i, j)!=0) {
-
-						if(getNeuron(i)->isExcitatory()) {
-						getNeuron(j)->addArrivingSpike(k+D, isPostSynap(i, j));						
-						} else {
-						getNeuron(j)->addArrivingSpike(k+D, g*isPostSynap(i, j));
-						}
+					if(getNeuron(i)->isExcitatory()) {
+					getNeuron(PostSynap)->addArrivingSpike(k+D, 1);						
+					} else {
+					getNeuron(PostSynap)->addArrivingSpike(k+D, g);
 					}
+					
 				}
 			}				
 		}
 	}
 }
 
-void Network::updateWriting (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, string filename)
+void Network::updateWritingPot (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, string filename)
 {
 	unsigned int TotNbNeurons(Neurons_.size());
 
@@ -122,16 +115,14 @@ void Network::updateWriting (double Iext, unsigned int nbSteps, unsigned int Iex
 						
 			if (getNeuron(i)->update(1, backgroundInfluence)) {
 
-				for (unsigned int j(0); j < TotNbNeurons; ++j) {
+				for (auto PostSynap : neurons_graphe_[i]) {
 
-					if(isPostSynap(i, j)!=0) {
-
-						if(getNeuron(i)->isExcitatory()) {
-						getNeuron(j)->addArrivingSpike(k+D, isPostSynap(i, j));						
-						} else {
-						getNeuron(j)->addArrivingSpike(k+D, -1*isPostSynap(i, j));
-						}
+					if(getNeuron(i)->isExcitatory()) {
+					getNeuron(PostSynap)->addArrivingSpike(k+D, 1);						
+					} else {
+					getNeuron(PostSynap)->addArrivingSpike(k+D, g);
 					}
+					
 				}
 			}
 
@@ -142,6 +133,41 @@ void Network::updateWriting (double Iext, unsigned int nbSteps, unsigned int Iex
 		for (auto val : mempot_values)
 		{
 			myfile << val << " ";
+		}
+	}
+}
+
+void Network::updateWritingSpi (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, string filename)
+{
+	unsigned int TotNbNeurons(Neurons_.size());
+
+	ofstream myfile;
+
+	myfile.open (filename+".dat");
+
+	for (unsigned int k(0); k < nbSteps; ++k) {
+
+		if((k >= Iext_start) && (k <= Iext_stop)) {
+			getNeuron(0)->setIext(Iext);
+		} else {
+			getNeuron(0)->setIext(0.0);
+		}
+			
+		for (unsigned int i(0); i < TotNbNeurons; ++i) {
+						
+			if (getNeuron(i)->update(1, backgroundInfluence)) {
+
+				myfile << k << "\t" << i << "\n";
+
+				for (auto PostSynap : neurons_graphe_[i]) {
+
+					if(getNeuron(i)->isExcitatory()) {
+					getNeuron(PostSynap)->addArrivingSpike(k+D, 1);						
+					} else {
+					getNeuron(PostSynap)->addArrivingSpike(k+D, g);
+					}
+				}
+			}
 		}
 	}
 }

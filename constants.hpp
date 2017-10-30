@@ -5,8 +5,7 @@ double const h (0.1); // step of simulation
 unsigned int const D (15); // Delay/h ie 1.5ms/0.1ms; nb of step in Delay
 double const J (0.1); // PSP
 int const g (-5);
-double const Mu_thre (0.01);
-double const Mu_ext (2*Mu_thre);
+double const Mu_ext (20);
 
 #endif
 

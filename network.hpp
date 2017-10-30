@@ -20,37 +20,29 @@ public:
 	/**
   	@brief : Constructor, create a network of excitatory neurons with random
   	connections between them
-  	@param : NbNeurons : number of neurons
+  	@param NbNeurons : number of neurons
 	*/
 	Network(unsigned int NbNeurons);
 
 	/**
   	@brief : Constructor, create a network of excitatory neurons and inhibitor
   	neurons, use creatRandomCon(...) to create connections between them
-  	@param : nbExiNeurons : number of excitatory neurons
-  	@param : nbInhNeurons : number of inhibitor neurons
+  	@param nbExiNeurons : number of excitatory neurons
+  	@param nbInhNeurons : number of inhibitor neurons
 	*/
 	Network(unsigned int nbExiNeurons, unsigned int nbInhNeurons);
 
 	/**
   	@brief : Getter, allow to manipulate neurons individually 
-  	@param : ID : index of the neuron in the attribute Neurons_
+  	@param ID : index of the neuron in the attribute Neurons_
   	@return : a pointer to the neuron of index ID
 	*/
 	Neuron* getNeuron(unsigned int ID);
 
 	/**
-  	@brief : Getter, tell is one neuron is reached by the spikes of another
-  	@param : IDPreNeur : index of the spiking neuron
-  	@param : IDPostNeur : index of the potentialy receiver neuron
-  	@return : 0 if the second neuron is not receiver, else the number of postsynaptic connections (>=1)
-	*/
-	unsigned int isPostSynap(unsigned int IDPreNeur, unsigned int IDPostNeur) const;
-
-	/**
   	@brief : Setter, allow to add a connection between two neurons
-  	@param : IDPreNeur : index of the presynaptic neuron
-  	@param : IDPostNeur : index of the postsynaptic neuron
+  	@param IDPreNeur : index of the presynaptic neuron
+  	@param IDPostNeur : index of the postsynaptic neuron
 	*/
 	void addPostSynap(unsigned int IDPreNeur, unsigned int IDPostNeur);
 
@@ -59,38 +51,50 @@ public:
   	notice that a neuron have a number of connections with excitatory neurons equals to 10% of 
   	the total number of excitatory neurons and a number of connections with inhibitor neurons
   	equals to 10% of the total number of inhibitor neurons
-  	@param : nbExciNeurons : number of excitatory neurons
-  	@param : nbInhiNeurons : number of inhbitor neurons
+  	@param nbExciNeurons : number of excitatory neurons
+  	@param nbInhiNeurons : number of inhbitor neurons
 	*/
 	void creatRandomCon(unsigned int nbExciNeurons, unsigned int nbInhiNeurons);
 
 	/**
   	@brief : update the network from the step t to the step t+number of step given
-  	@param : Iext : external (from oustide the network) current applied to the first created neuron (mv)
-  	@param : nbStep : number of step to the desired state of the network (>=1)
-  	@param : Iext_start : time (in steps) when the current Iext start being applied
-  	@param : Iest_stop : time (in steps) when the current Iext stop being applied
-  	@param : backgroundInfluence : influence of the background noise on the neuron behaviour (%)
+  	@param Iext : external (from oustide the network) current applied to the first created neuron (mv)
+  	@param nbStep : number of step to the desired state of the network (>=1)
+  	@param Iext_start : time (in steps) when the current Iext start being applied
+  	@param Iext_stop : time (in steps) when the current Iext stop being applied
+  	@param backgroundInfluence : influence of the background noise on the neuron behaviour (%)
 	*/
 	void update(double Iext, unsigned int nbStep, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence);
 
 	/**
   	@brief : update the network state for a given number of steps, write the potential membrane
-  	of all neurons at each step in a file called simulation.dat
-  	@param : Iext : external (from oustide the network) current applied to the first created neuron (mv)
-  	@param : nbSteps : number of step to the desired state of the network (>=1)
-  	@param : Iext_start : time (in steps) when the current Iext start being applied
-  	@param : Iext_stop : time (in steps) when the current Iext stop being applied
-  	@param : backgroundInfluence : influence of the background noise on the neuron behaviour (1 for 100%, 0.5 for 50%)
-  	@param : filename : name of the file (.dat) where the data are writen
+  	of all neurons at each stepin a file
+  	@param Iext : external (from oustide the network) current applied to the first created neuron (mv)
+  	@param nbSteps : number of step to the desired state of the network (>=1)
+  	@param Iext_start : time (in steps) when the current Iext start being applied
+  	@param Iext_stop : time (in steps) when the current Iext stop being applied
+  	@param backgroundInfluence : backgroundInfluence : influence of the background noise on the neuron behaviour (1 for 100%, 0.5 for 50%)
+  	@param filename : name of the file (.dat) where the data are writen
 	*/
-	void updateWriting (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, std::string filename);
+	void updateWritingPot (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, std::string filename);
 
+  /**
+    @brief : update the network state for a given number of steps, write the spiking timing of 
+    all the neurons in a file
+    @param Iext : external (from oustide the network) current applied to the first created neuron (mv)
+    @param nbSteps : number of step to the desired state of the network (>=1)
+    @param Iext_start : time (in steps) when the current Iext start being applied
+    @param Iext_stop : time (in steps) when the current Iext stop being applied
+    @param backgroundInfluence : backgroundInfluence : influence of the background noise on the neuron behaviour (1 for 100%, 0.5 for 50%)
+    @param filename : name of the file (.dat) where the data are writen
+  */
+  void updateWritingSpi (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, std::string filename);
 
 private:
-	std::vector<Neuron*> Neurons_; /** Store all the neurons of the network through pointers*/
-	std::vector<std::vector<unsigned int>> neurons_graphe_; /** Store all the connexions between the neurons,
-	horizontal axis : receiver neuron, vertical axis : spiker neuron*/
+
+	std::vector<Neuron*> Neurons_;  ///< Store all the neurons of the network through pointers
+
+	std::vector<std::vector<unsigned int>> neurons_graphe_;   ///< Store all the connexions between the neurons, each sub-vector i store the postsynaptic neurons of neuron i
 };
 
 #endif
