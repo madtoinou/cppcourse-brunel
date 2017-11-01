@@ -1,18 +1,10 @@
 #ifndef Constants_H
 #define Constants_H
 
-double const h (0.1); // step of simulation
-unsigned int const D (15); // Delay/h ie 1.5ms/0.1ms; nb of step in Delay
-double const J (0.1); // PSP
+double const h (0.1); ///< step of simulation
+unsigned int const D (15); ///<  number of step equals to the delay (1.5ms)
+double const J (0.1); ///< PSP
 int const g (-5);
 double const Mu_ext (20);
 
 #endif
-
-
-/*
-Ne=10 000, Ce = 1000, Je= 0.1
-Ni=2500, Ci=250, Ji=0.5
-
-g=5
-*/

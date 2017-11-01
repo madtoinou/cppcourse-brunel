@@ -137,7 +137,7 @@ void Network::updateWritingPot (double Iext, unsigned int nbSteps, unsigned int 
 	}
 }
 
-void Network::updateWritingSpi (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, string filename)
+void Network::updateWritingSpi (unsigned int nbSteps, double backgroundInfluence, string filename)
 {
 	unsigned int TotNbNeurons(Neurons_.size());
 
@@ -146,12 +146,6 @@ void Network::updateWritingSpi (double Iext, unsigned int nbSteps, unsigned int 
 	myfile.open (filename+".dat");
 
 	for (unsigned int k(0); k < nbSteps; ++k) {
-
-		if((k >= Iext_start) && (k <= Iext_stop)) {
-			getNeuron(0)->setIext(Iext);
-		} else {
-			getNeuron(0)->setIext(0.0);
-		}
 			
 		for (unsigned int i(0); i < TotNbNeurons; ++i) {
 						

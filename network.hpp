@@ -81,14 +81,11 @@ public:
   /**
     @brief : update the network state for a given number of steps, write the spiking timing of 
     all the neurons in a file
-    @param Iext : external (from oustide the network) current applied to the first created neuron (mv)
     @param nbSteps : number of step to the desired state of the network (>=1)
-    @param Iext_start : time (in steps) when the current Iext start being applied
-    @param Iext_stop : time (in steps) when the current Iext stop being applied
     @param backgroundInfluence : backgroundInfluence : influence of the background noise on the neuron behaviour (1 for 100%, 0.5 for 50%)
     @param filename : name of the file (.dat) where the data are writen
   */
-  void updateWritingSpi (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, std::string filename);
+  void updateWritingSpi (unsigned int nbSteps, double backgroundInfluence, std::string filename);
 
 private:
 
