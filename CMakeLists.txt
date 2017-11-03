@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(Neuron)
-set(CMAKE_CXX_FALGS "-W -Wall -pedantic -std=c++11 -O2")
-
-enable_testing()
-add_subdirectory(googletest)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+set(CMAKE_CXX_FALGS "-W -Wall -pedantic -std=c++11")
 
 ###### Simulation core compilation ######
 
@@ -14,7 +10,11 @@ add_executable (neuron
 					network.cpp)
 
 ###### Gtest complation ######
-					
+
+enable_testing()
+add_subdirectory(googletest)
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})					
+
 add_executable (neuron_unittest 
 					neuron.cpp 
 					network.cpp 

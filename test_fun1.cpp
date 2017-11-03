@@ -17,7 +17,7 @@ int main()
 {
 	Network hugeBrain(10000,2500);
 
-	hugeBrain.updateWritingSpi(1000, 1.0, "spikes2");
+	hugeBrain.updateWritingSpi(1000, 1.0, "spikes");
 
 	/*cout << "Do you want to run a personnalized simulation? [y/n]" << endl;
 	cin >> answer;

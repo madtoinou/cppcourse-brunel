@@ -76,7 +76,7 @@ public:
   	@param backgroundInfluence : backgroundInfluence : influence of the background noise on the neuron behaviour (1 for 100%, 0.5 for 50%)
   	@param filename : name of the file (.dat) where the data are writen
 	*/
-	void updateWritingPot (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, std::string filename);
+	void update(double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, std::string filename);
 
   /**
     @brief : update the network state for a given number of steps, write the spiking timing of 

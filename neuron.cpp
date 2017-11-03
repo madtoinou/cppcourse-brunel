@@ -115,17 +115,18 @@ bool Neuron::update(unsigned int nbStep, double backgroundInfluence)
 
 		static random_device rd;
 		static mt19937 gen(rd());
-		/*! Probability of noise (spike from outside the network), computed from the average number of spike and the simulation step*/
+		/*Probability of noise (spike from outside the network), computed from the average number of spike and the simulation step*/
 		static poisson_distribution<> background_noise_(Mu_ext*nbStep);
 
-			ReceivedSpike = buffer_spikes_.at(getReadOutPos()) + background_noise_(gen)*backgroundInfluence;
+			ReceivedSpike = buffer_spikes_.at(getReadOutPos()) + background_noise_(gen)*backgroundInfluence*J;
 
 			setMemPot(EXP1_*memb_pot_ + Iext_*R_*(1-EXP1_) + ReceivedSpike);
-
-			buffer_spikes_.at(getReadOutPos()) = 0;
 		
 		}
-	local_clock_+= 1;
+		/*reset value of the buffer (used for the update)*/
+		buffer_spikes_.at(getReadOutPos()) = 0;
+
+		local_clock_+= 1;
 	}
 
 	return isSpiking;
