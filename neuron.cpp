@@ -37,13 +37,11 @@ double Neuron::getLastSpike() const
 	}
 }
 
-<<<<<<< HEAD
 unsigned int Neuron::getReadoutBufferIndex() const
 {
 	return local_clock_ % (buffer_spikes_.size()+1);
 }
 
-=======
 unsigned int Neuron::getLocalClock() const
 {
 	return local_clock_;
@@ -70,11 +68,6 @@ bool Neuron::isExcitatory() const
 	return isExcitatory_;
 }
 
-<<<<<<< HEAD
-
->>>>>>> 2neurons
-=======
->>>>>>> cpppcourse-brunel
 void Neuron::setMemPot(double pot)
 {
 	memb_pot_=pot;
@@ -97,20 +90,9 @@ void Neuron::addSpike(unsigned int time)
 
 void Neuron::addArrivingSpike(unsigned int arriving_time, int ConnectionNature)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		buffer_spikes_.at((arriving_time) % (buffer_spikes_.size()+1)) += J;
-		//si firing est en retard, indice = D-1
-		//si firing = receiver, indice = D
-		//firing est incrémenté seulement après, impossible que firing > receiver
-		// le -1 vient de l'implémentation des vectors, premier indice étant 0
-=======
-=======
 	/*modulo is used to write the arriving spike right behing the readout index, thus
 	the delay is well implemented (thanks to a well thought buffer size)*/
->>>>>>> cpppcourse-brunel
 	buffer_spikes_[(arriving_time  % buffer_spikes_.size())] += J*ConnectionNature;
->>>>>>> 2neurons
 }
 
 bool Neuron::update(unsigned int nbStep, double backgroundInfluence)
@@ -148,25 +130,9 @@ bool Neuron::update(unsigned int nbStep, double backgroundInfluence)
 
 			buffer_spikes_.at(getReadOutPos()) = 0;
 		
-<<<<<<< HEAD
-		for (auto& tar_neuron : Network::getTargets(this))
-		{
-			tar_neuron->addArrivingSpike(local_clock_ + 15, getMemPot()); // where 15 is the number of steps to get the delay
-			/*éventuellement multiplier getMemPOt()
-			par le facteur efficacy entre les deux neurones, cf les informations de 
-			connected_neurons
-			*/
-		}
-
-		setMemPot(V_RESET_);
-	} else {
-		setMemPot(EXP1_*memb_pot_ + I_ext*R_*(1-EXP1_) 
-			+ buffer_spikes_.at(getReadoutBufferIndex())
-			);
-=======
 		}
 	local_clock_+= 1;
->>>>>>> 2neurons
+
 	}
 
 	return isSpiking;

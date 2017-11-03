@@ -2,16 +2,11 @@
 #define Network_H
 
 #include <iostream>
-<<<<<<< HEAD
-#include <unordered_map>
-#include <vector>
-=======
 #include <vector>
 #include <fstream>
 #include <random>
 #include <string>
 #include "constants.hpp"
->>>>>>> 2neurons
 #include "neuron.hpp"
 
 /** 
@@ -22,26 +17,11 @@
 class Network
 {
 public:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	Network(unsigned int nbNeurons=0);
-
-	const std::vector<Neuron*>& getTargets(Neuron* neuron);
-
-private:
-	std::unordered_map<Neuron*, std::vector<Neuron*> > neurons_network_;
-};
-
-
-
-=======
-=======
 	/**
   	@brief : Constructor, create a network of excitatory neurons with random
   	connections between them
   	@param NbNeurons : number of neurons
 	*/
->>>>>>> cpppcourse-brunel
 	Network(unsigned int NbNeurons);
 
 	/**
@@ -113,6 +93,5 @@ private:
 
 	std::vector<std::vector<unsigned int>> neurons_graphe_;   ///< Store all the connexions between the neurons, each sub-vector i store the postsynaptic neurons of neuron i
 };
->>>>>>> 2neurons
 
 #endif

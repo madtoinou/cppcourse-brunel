@@ -1,26 +1,8 @@
-<<<<<<< HEAD
 #include <iostream>
-=======
->>>>>>> 2neurons
 #include "network.hpp"
 
 using namespace std;
 
-<<<<<<< HEAD
-Network::Network(unsigned int nbNeurons)
-:
-{
-	for(unsigned int i(0); i< nbNeurons; ++i)
-	{
-		Neuron* p_newNeuron = new Neuron;
-		neurons_network_.push_back(p_newNeuron);
-	}
-}
-
-const std::vector<Neuron*>& Network::getTargets(Neuron* neuron)
-{
-	return neurons_network_[neuron];
-=======
 Network::Network(unsigned int NbNeurons)
 : neurons_graphe_(NbNeurons, vector<unsigned int>())
 {
@@ -154,7 +136,6 @@ void Network::updateWritingPot (double Iext, unsigned int nbSteps, unsigned int 
 			myfile << val << " ";
 		}
 	}
->>>>>>> 2neurons
 }
 
 void Network::updateWritingSpi (unsigned int nbSteps, double backgroundInfluence, string filename)

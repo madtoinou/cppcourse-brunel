@@ -47,17 +47,17 @@ public:
   	no spike occured
 	*/
 	double getLastSpike() const;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+	/**
+  	@brief Getter, indicate the index of the readout for the ring-buffer
+  	@return : position in the ring-buffer corresponding to local_time
+	*/
 	unsigned int getReadoutBufferIndex() const;
-=======
-=======
 
 	/**
   	@brief : Getter, local time of the neuron
   	@return : local time of the neuron (number of steps)
 	*/
->>>>>>> cpppcourse-brunel
 	unsigned int getLocalClock() const;
 
 	/**
@@ -83,7 +83,6 @@ public:
   	@return : true if the neuron is excitatory, else false
 	*/
 	bool isExcitatory() const;
->>>>>>> 2neurons
 
 	/**
   	@brief : Setter, set the attribute memb_pot_ to pot
