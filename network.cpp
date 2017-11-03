@@ -146,19 +146,19 @@ void Network::updateWritingSpi (unsigned int nbSteps, double backgroundInfluence
 	myfile.open (filename+".dat");
 
 	for (unsigned int k(0); k < nbSteps; ++k) {
-			
+
 		for (unsigned int i(0); i < TotNbNeurons; ++i) {
 						
-			if (getNeuron(i)->update(1, backgroundInfluence)) {
+			if (Neurons_[i]->update(1, backgroundInfluence)) {
 
 				myfile << k << "\t" << i << "\n";
 
 				for (auto PostSynap : neurons_graphe_[i]) {
 
 					if(getNeuron(i)->isExcitatory()) {
-					getNeuron(PostSynap)->addArrivingSpike(k+D, 1);						
+					Neurons_[PostSynap]->addArrivingSpike(k+D, 1);						
 					} else {
-					getNeuron(PostSynap)->addArrivingSpike(k+D, g);
+					Neurons_[PostSynap]->addArrivingSpike(k+D, g);
 					}
 				}
 			}

@@ -8,9 +8,6 @@ using namespace std;
 
 unsigned int simtime (0);
 unsigned int simduration(0);
-double I_ext(0);
-unsigned int I_ext_start(0);
-unsigned int I_ext_stop(0);
 unsigned int nbExciNeur(0);
 unsigned int nbInhiNeur(0);
 string filename("simulation");
@@ -20,11 +17,9 @@ int main()
 {
 	Network hugeBrain(10000,2500);
 
-	cout << "Network generated" << endl;
+	hugeBrain.updateWritingSpi(1000, 1.0, "spikes2");
 
-	hugeBrain.updateWritingSpi(1000, 1.0, "spikes");
-
-	cout << "Do you want to run a personnalized simulation? [y/n]" << endl;
+	/*cout << "Do you want to run a personnalized simulation? [y/n]" << endl;
 	cin >> answer;
 
 	if (answer == 'y') {
@@ -66,4 +61,5 @@ int main()
 
 		smallBrain.updateWritingPot(I_ext, simduration, I_ext_start, I_ext_stop, 1, filename);
 	}
+	*/
 }
