@@ -37,16 +37,10 @@ double Neuron::getLastSpike() const
 	}
 }
 
-unsigned int Neuron::getReadoutBufferIndex() const
-{
-	return local_clock_ % (buffer_spikes_.size()+1);
-}
-
 unsigned int Neuron::getLocalClock() const
 {
 	return local_clock_;
 }
-
 
 unsigned int Neuron::getLastSpikeT() const
 {
@@ -124,13 +118,16 @@ bool Neuron::update(unsigned int nbStep, double backgroundInfluence)
 		/*! Probability of noise (spike from outside the network), computed from the average number of spike and the simulation step*/
 		static poisson_distribution<> background_noise_(Mu_ext*nbStep);
 
-			ReceivedSpike = buffer_spikes_.at(getReadOutPos()) + background_noise_(gen)*backgroundInfluence;
+			ReceivedSpike = buffer_spikes_.at(getReadOutPos()) + background_noise_(gen)*backgroundInfluence*J;
 
 			setMemPot(EXP1_*memb_pot_ + Iext_*R_*(1-EXP1_) + ReceivedSpike);
 
 			buffer_spikes_.at(getReadOutPos()) = 0;
-		
+
 		}
+
+	buffer_spikes_.at(getReadOutPos()) = 0;
+
 	local_clock_+= 1;
 
 	}

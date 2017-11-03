@@ -49,12 +49,6 @@ public:
 	double getLastSpike() const;
 
 	/**
-  	@brief Getter, indicate the index of the readout for the ring-buffer
-  	@return : position in the ring-buffer corresponding to local_time
-	*/
-	unsigned int getReadoutBufferIndex() const;
-
-	/**
   	@brief : Getter, local time of the neuron
   	@return : local time of the neuron (number of steps)
 	*/
