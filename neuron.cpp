@@ -122,8 +122,6 @@ bool Neuron::update(unsigned int nbStep, double backgroundInfluence)
 
 			setMemPot(EXP1_*memb_pot_ + Iext_*R_*(1-EXP1_) + ReceivedSpike);
 
-			buffer_spikes_.at(getReadOutPos()) = 0;
-
 		}
 
 	buffer_spikes_.at(getReadOutPos()) = 0;
