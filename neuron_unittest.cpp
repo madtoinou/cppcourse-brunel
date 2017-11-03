@@ -1,9 +1,9 @@
 #include <iostream>
+#include <cmath>
 #include "constants.hpp"
 #include "neuron.hpp"
 #include "network.hpp"
 #include "gtest/gtest.h"
-#include <cmath>
 
 TEST (NeuronTest, MembPot_1step_positivInput) {
 	Neuron neuron;
@@ -28,7 +28,7 @@ TEST (NeuronTest, MembPot_ManyStep_noInput) {
 	Neuron neuron;
 	neuron.setIext(0.0);
 
-	neuron.update(100000,0);
+	neuron.update(10000,0);
 	EXPECT_EQ(0, neuron.getNbSpike());
 }
 

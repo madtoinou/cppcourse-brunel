@@ -13,8 +13,6 @@
 =======
 >>>>>>> 2neurons
 #include <iostream>
-#include <fstream>
-#include <vector>
 #include <string>
 <<<<<<< HEAD
 #include "neuron.hpp"
@@ -99,16 +97,63 @@ int main()
 using namespace std;
 
 unsigned int simtime (0);
-unsigned int simduration(1000);
-double I_ext(1.01);
-unsigned int I_ext_start(0);
-unsigned int I_ext_end(10000);
+unsigned int simduration(0);
+unsigned int nbExciNeur(0);
+unsigned int nbInhiNeur(0);
+string filename("simulation");
+char answer('n');
 
 int main() 
 {
-	Network smallBrain(1000,250);
+	Network hugeBrain(10000,2500);
 
-	smallBrain.updateWriting(I_ext, simduration, I_ext_start, I_ext_end, 0);
+	hugeBrain.updateWritingSpi(1000, 1.0, "spikes2");
 
+<<<<<<< HEAD
 >>>>>>> 2neurons
+=======
+	/*cout << "Do you want to run a personnalized simulation? [y/n]" << endl;
+	cin >> answer;
+
+	if (answer == 'y') {
+		do {
+		cout << "Enter the duration of the simulation (in steps)" << endl;
+		cin >> simduration;
+		} while (simduration <= 0);
+
+		cout << "Do you want to apply a external current to a neuron of a network [y/n]" << endl;
+		cin >> answer;
+		if (answer == 'y') {
+			do {
+				cout << "Enter the external current applied to the first neuron of the network (in mV, recommended: 0)" << endl;
+				cin >> I_ext;
+
+				cout << "Enter the time where external current start to be applied (in steps, >=0)" << endl;
+				cin >> I_ext_start;
+
+				cout << "Enter the time where external current stop to be applied (in steps, >=0)" << endl;
+				cin >> I_ext_stop;
+	 	
+			} while ((I_ext_stop < I_ext_start) || (I_ext_start < 0) || (I_ext_stop < 0));
+		}
+
+		do {
+		cout << "Enter the number of excitatory neurons in the network (int, >= 0)" << endl;
+		cin >> nbExciNeur;
+		} while (nbExciNeur < 0);
+
+		do {
+		cout << "Enter the number of inhibitory neurons in the network (int, >= 0)" << endl;
+		cin >> nbInhiNeur;
+		} while (nbInhiNeur < 0);
+
+		cout << "Enter the name of the where you want to store the membrane potential of the neurons" << endl;
+		cin >> filename;
+
+		Network smallBrain(nbExciNeur,nbInhiNeur);
+
+		smallBrain.updateWritingPot(I_ext, simduration, I_ext_start, I_ext_stop, 1, filename);
+	}
+	*/
+>>>>>>> cpppcourse-brunel
 }
