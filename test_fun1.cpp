@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //check slide 20 to creat the main
 //on calcule exp(-h/tho) et (1-exp(-h/tho) une fois pour toute car il est constant au cours du temps
 	//Iext est entré au début de la simulation, il s'agit d'une constante
@@ -9,10 +10,13 @@
 	// Iext dans (0, 400) pA
 	//1000 ms = durée simulation
 
+=======
+>>>>>>> 2neurons
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
+<<<<<<< HEAD
 #include "neuron.hpp"
 
 using namespace std;
@@ -87,4 +91,24 @@ int main()
 		cout << 
 	simtime+=h;
 	}
+=======
+#include "constants.hpp"
+#include "neuron.hpp"
+#include "network.hpp"
+
+using namespace std;
+
+unsigned int simtime (0);
+unsigned int simduration(1000);
+double I_ext(1.01);
+unsigned int I_ext_start(0);
+unsigned int I_ext_end(10000);
+
+int main() 
+{
+	Network smallBrain(1000,250);
+
+	smallBrain.updateWriting(I_ext, simduration, I_ext_start, I_ext_end, 0);
+
+>>>>>>> 2neurons
 }
