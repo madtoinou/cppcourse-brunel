@@ -39,6 +39,12 @@ public:
 	*/
 	Neuron* getNeuron(unsigned int ID);
 
+  /**
+    @brief : Getter, return the vector containting the connections between neurons
+    @return : return the neurons_graphe_ attribute
+  */
+  std::vector<std::vector<unsigned int>> getNeuronsGraphe();
+
 	/**
   	@brief : Setter, allow to add a connection between two neurons
   	@param IDPreNeur : index of the presynaptic neuron

@@ -38,6 +38,12 @@ Neuron* Network::getNeuron(unsigned int ID)
 	return Neurons_[ID];
 }
 
+vector<vector<unsigned int>> Network::getNeuronsGraphe()
+{
+	return neurons_graphe_;
+}
+
+
 void Network::addPostSynap(unsigned int IDPreNeur, unsigned int IDPostNeur)
 {
 	neurons_graphe_[IDPreNeur].push_back(IDPostNeur);
