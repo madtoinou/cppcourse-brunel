@@ -38,9 +38,14 @@ public:
   ~Network();
 
   /**
-  @brief : making Network class non copyable
+  @brief : Network is non copyable (necessity of deep copy for neurons pointers)
   */
-  Network& operator=(const Network&) = delete;
+  Network(const Network& other) = delete;
+
+  /**
+  @brief : Network is non copyable (necessity of deep copy for neurons pointers)
+  */
+  Network& operator=(const Network&);
 
 	/**
   	@brief : Getter, allow to manipulate neurons individually 
