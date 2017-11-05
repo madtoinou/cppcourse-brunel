@@ -32,12 +32,33 @@ public:
 	*/
 	Network(unsigned int nbExiNeurons, unsigned int nbInhNeurons);
 
+  /**
+  @brief : Destructor, manage the pointer desallocation
+  */
+  ~Network();
+
+  /**
+  @brief : Network is non copyable (necessity of deep copy for neurons pointers)
+  */
+  Network(const Network& other) = delete;
+
+  /**
+  @brief : Network is non copyable (necessity of deep copy for neurons pointers)
+  */
+  Network& operator=(const Network&);
+
 	/**
   	@brief : Getter, allow to manipulate neurons individually 
   	@param ID : index of the neuron in the attribute Neurons_
   	@return : a pointer to the neuron of index ID
 	*/
 	Neuron* getNeuron(unsigned int ID);
+
+  /**
+    @brief : Getter, return the vector containting the connections between neurons
+    @return : return the neurons_graphe_ attribute
+  */
+  std::vector<std::vector<unsigned int>> getNeuronsGraphe();
 
 	/**
   	@brief : Setter, allow to add a connection between two neurons
@@ -59,12 +80,12 @@ public:
 	/**
   	@brief : update the network from the step t to the step t+number of step given
   	@param Iext : external (from oustide the network) current applied to the first created neuron (mv)
-  	@param nbStep : number of step to the desired state of the network (>=1)
+  	@param nbSteps : number of step to the desired state of the network (>=1)
   	@param Iext_start : time (in steps) when the current Iext start being applied
   	@param Iext_stop : time (in steps) when the current Iext stop being applied
   	@param backgroundInfluence : influence of the background noise on the neuron behaviour (%)
 	*/
-	void update(double Iext, unsigned int nbStep, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence);
+	void update(double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence);
 
 	/**
   	@brief : update the network state for a given number of steps, write the potential membrane
@@ -76,7 +97,7 @@ public:
   	@param backgroundInfluence : backgroundInfluence : influence of the background noise on the neuron behaviour (1 for 100%, 0.5 for 50%)
   	@param filename : name of the file (.dat) where the data are writen
 	*/
-	void updateWritingPot (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, std::string filename);
+	void update(double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, std::string filename);
 
   /**
     @brief : update the network state for a given number of steps, write the spiking timing of 

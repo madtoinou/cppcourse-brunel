@@ -29,6 +29,10 @@ public:
 	*/
 	Neuron(bool isExci=true, double memb_pot=V_RESET_, unsigned int local_clock=0, double Iext=0, unsigned int last_spike_t=0, unsigned int nb_spike=0);
 
+	//Using the default destructor
+
+	//Using the default copy constructor
+
 	/**
   	@brief : Getter, neuron's membrane potential
   	@return : value of the neuron membrane potential
@@ -120,11 +124,11 @@ public:
 
 private:
 	
-	static const double THO_;	///< Constant, represents ...
+	static const double THO_;	///< Constant, caracteristic of the membrane
 
 	static const double C_;		///< Capacity of the neuron's membrane (THO.Ohm⁻1)
 
-	static const double SPIKE_THRESHOLD_;	///< Potential value corresponding to a spike (mV)
+	static const double SPIKE_THRESHOLD_;	///< Firing threshold (mV)
 
 	static const double V_RESET_;	///< Membrane potential value after it reached the threshold (mV)
 
