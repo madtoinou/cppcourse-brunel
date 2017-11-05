@@ -124,11 +124,11 @@ public:
 
 private:
 	
-	static const double THO_;	///< Constant, represents ...
+	static const double THO_;	///< Constant, caracteristic of the membrane
 
 	static const double C_;		///< Capacity of the neuron's membrane (THO.Ohm⁻1)
 
-	static const double SPIKE_THRESHOLD_;	///< Potential value corresponding to a spike (mV)
+	static const double SPIKE_THRESHOLD_;	///< Firing threshold (mV)
 
 	static const double V_RESET_;	///< Membrane potential value after it reached the threshold (mV)
 

@@ -118,7 +118,7 @@ void Network::update (double Iext, unsigned int nbSteps, unsigned int Iext_start
 	}
 }
 
-void Network::update (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, string filename)
+void Network::update (double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence, std::string filename)
 {
 	unsigned int TotNbNeurons(Neurons_.size());
 

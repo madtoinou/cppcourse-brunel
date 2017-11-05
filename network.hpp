@@ -80,12 +80,12 @@ public:
 	/**
   	@brief : update the network from the step t to the step t+number of step given
   	@param Iext : external (from oustide the network) current applied to the first created neuron (mv)
-  	@param nbStep : number of step to the desired state of the network (>=1)
+  	@param nbSteps : number of step to the desired state of the network (>=1)
   	@param Iext_start : time (in steps) when the current Iext start being applied
   	@param Iext_stop : time (in steps) when the current Iext stop being applied
   	@param backgroundInfluence : influence of the background noise on the neuron behaviour (%)
 	*/
-	void update(double Iext, unsigned int nbStep, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence);
+	void update(double Iext, unsigned int nbSteps, unsigned int Iext_start, unsigned int Iext_stop, double backgroundInfluence);
 
 	/**
   	@brief : update the network state for a given number of steps, write the potential membrane
