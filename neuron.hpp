@@ -29,6 +29,10 @@ public:
 	*/
 	Neuron(bool isExci=true, double memb_pot=V_RESET_, unsigned int local_clock=0, double Iext=0, unsigned int last_spike_t=0, unsigned int nb_spike=0);
 
+	//Using the default destructor
+
+	//Using the default copy constructor
+
 	/**
   	@brief : Getter, neuron's membrane potential
   	@return : value of the neuron membrane potential

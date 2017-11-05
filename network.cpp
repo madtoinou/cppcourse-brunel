@@ -33,6 +33,15 @@ Network::Network(unsigned int nbExciNeurons, unsigned int nbInhiNeurons)
 	creatRandomCon(nbExciNeurons, nbInhiNeurons);
 }
 
+Network::~Network()
+{
+	for (auto p_neuron : Neurons_)
+	{
+		delete p_neuron;
+		p_neuron=nullptr;
+	}
+}
+
 Neuron* Network::getNeuron(unsigned int ID)
 {
 	return Neurons_[ID];

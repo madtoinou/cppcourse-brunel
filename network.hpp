@@ -32,6 +32,16 @@ public:
 	*/
 	Network(unsigned int nbExiNeurons, unsigned int nbInhNeurons);
 
+  /**
+  @brief : Destructor, manage the pointer desallocation
+  */
+  ~Network();
+
+  /**
+  @brief : making Network class non copyable
+  */
+  Network& operator=(const Network&) = delete;
+
 	/**
   	@brief : Getter, allow to manipulate neurons individually 
   	@param ID : index of the neuron in the attribute Neurons_
