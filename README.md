@@ -4,14 +4,14 @@ This repository allows you to simulate a network of neurons, which can be excita
 the spike reaching the post-synaptic neuron after a constant delay (here 1.5ms, can be changed in the file constants.hpp.
 
 Files needed:
-CMakeLists.txt : manage the compilation of the simulation, gtest and doxygen documentation \n
-Doxyconfig: config file for doxygen generation \n
-constants.hpp : constants of the simualtion (encapsulation purpose) \n
-network. cpp & network.hpp : class network \n
-neuron.cpp & neuron.hpp : class neuron \n
-test_fun1.cpp : body of the simulation \n
-neuron_unittest.cpp : body of the gtest \n
-ploting.py : python script to plot a scatter plot and a histogramm with the output of the simulation \n
+CMakeLists.txt : manage the compilation of the simulation, gtest and doxygen documentation
+Doxyconfig: config file for doxygen generation
+constants.hpp : constants of the simualtion (encapsulation purpose)
+network. cpp & network.hpp : class network
+neuron.cpp & neuron.hpp : class neuron
+test_fun1.cpp : body of the simulation
+neuron_unittest.cpp : body of the gtest
+ploting.py : python script to plot a scatter plot and a histogramm with the output of the simulation
 
 Brief:
 The default simulation will run for 100ms, with a total of 12 500 neurons (10 000 excitatory neurons, 2 500 inhibitatory neurons) randomly connected.
