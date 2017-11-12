@@ -1,0 +1,2 @@
+/home/localguest/Documents/googletest/build/CMakeFiles/gtest.dir
+/home/localguest/Documents/googletest/build/CMakeFiles/gtest_main.dir
