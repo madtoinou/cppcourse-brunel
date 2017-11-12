@@ -96,6 +96,7 @@ bool Neuron::update(unsigned int nbStep, double backgroundInfluence)
 
 	for (unsigned int k(0); k < nbStep; ++k) {
 		isSpiking = false;
+		ReceivedSpike = 0;
 
 		/*neuron reachs the spike threshold*/
 		if (getMemPot() > SPIKE_THRESHOLD_) {

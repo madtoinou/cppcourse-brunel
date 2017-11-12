@@ -3,7 +3,7 @@
 # Project Title
 
 This repository allows you to simulate a network of neurons, which can be excitatory or inhibitatory, thanks to two classes: network and neuron. Neurons have the ability to spike each other,
-the spike reaching the post-synaptic neuron after a constant delay.
+the spike reaching the post-synaptic neuron after a constant delay. You can change global constant is the file constants.hpp (weight of inhibitor neuron, firing rate, ...)
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ You can use the follow commands in your terminal to execute the simulation and o
 * IMPORTANT: You have to creat a build folder and execute the cmake and make commands from it
 * IMPORTANT: You have to put the ploting.py file in the build in order to use the code as it is, else, change the path to your .dat file (output of the simulation) in the python script.
 
-* NB: The default simulation will run for 100ms, with a total of 12 500 neurons (10 000 excitatory neurons, 2 500 inhibitatory neurons) randomly connected.
+* NB: The default simulation will run for 100ms (one step is equals to 0.1ms), with a total of 12 500 neurons (10 000 excitatory neurons, 2 500 inhibitatory neurons) randomly connected.
 
 ### Prerequisites
 
