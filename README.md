@@ -7,7 +7,7 @@ the spike reaching the post-synaptic neuron after a constant delay. You can chan
 
 ## Getting Started
 
-You can use the follow commands in your terminal to execute the simulation and obtain the two graphics:
+You can use the follow commands in your terminal to create the documentation, run the simulation and obtain the two graphics:
 * cd neuron (go in the neuron depository, obtained from github)
 * mkdir build
 * mv ploting.py build
@@ -35,7 +35,7 @@ You can use the follow commands in your terminal to execute the simulation and o
 
 Go in the build folder, run the make command and run the neuron_unittest executable (./neuron_unittest). The last test is a bit heavy, it should last approximately 650 ms.
 
-### Break down into end to end tests
+## Break down into end to end tests
 
 See the neuron_unittest.cpp file to have more detailed explanation
 
@@ -44,6 +44,9 @@ See the neuron_unittest.cpp file to have more detailed explanation
 * We also test the buffer, check if the writing and reading index are well implented depending on the delay constant)
 * We check if a neuron have the right numbers of connections to him
 ```
+
+* There is no assert is the code, considering the fact that the type of all the variables are given to the user when he is asked to enter it. 
+
 ### Files of the repository
 
 * CMakeLists.txt : manage the compilation of the simulation, gtest and doxygen documentation
